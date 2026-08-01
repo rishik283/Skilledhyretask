@@ -37,6 +37,14 @@ function App() {
         <div className={`alert ${message.type}`}>{message.text}</div>
       )}
 
+      <div className="hero">
+        <div>
+          <h2>Manage your workforce with confidence</h2>
+          <p>Track employee details, update records quickly, and keep your team organized in one place.</p>
+        </div>
+        <Link to="/add" className="btn primary">+ Add Employee</Link>
+      </div>
+
       <Routes>
         <Route path="/" element={<EmployeeList showMessage={showMessage} />} />
         <Route path="/add" element={<AddEmployee showMessage={showMessage} />} />

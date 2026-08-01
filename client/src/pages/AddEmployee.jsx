@@ -24,7 +24,8 @@ function AddEmployee({ showMessage }) {
       showMessage('success', 'Employee added successfully');
       navigate('/');
     } catch (error) {
-      showMessage('error', error.response?.data?.message || 'Failed to add employee');
+      const backendMessage = error.response?.data?.message || error.response?.data?.error || error.message;
+      showMessage('error', backendMessage || 'Failed to add employee');
     }
   };
 

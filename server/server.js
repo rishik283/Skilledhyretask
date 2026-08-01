@@ -21,19 +21,23 @@ app.get('/', (req, res) => {
 });
 
 async function connectDatabase() {
-  try {
-    const mongoUri = process.env.MONGO_URI || process.env.MONGODB_URI;
+  const mongoUri = process.env.MONGO_URI || process.env.MONGODB_URI;
 
+  try {
     if (mongoUri) {
-      await mongoose.connect(mongoUri);
+      await mongoose.connect(mongoUri, { serverSelectionTimeoutMS: 10000 });
       console.log('Connected to MongoDB');
       return;
     }
+  } catch (error) {
+    console.warn('Primary MongoDB connection failed, trying fallback:', error.message);
+  }
 
+  try {
     const mongoServer = await MongoMemoryServer.create();
     const uri = mongoServer.getUri();
-    await mongoose.connect(uri);
-    console.log('Connected to in-memory MongoDB');
+    await mongoose.connect(uri, { serverSelectionTimeoutMS: 10000 });
+    console.log('Connected to in-memory MongoDB fallback');
   } catch (error) {
     console.error('Database connection error:', error);
     process.exit(1);
@@ -42,7 +46,7 @@ async function connectDatabase() {
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ message: 'Something went wrong!' });
+  res.status(500).json({ message: 'Something went wrong!', error: err.message });
 });
 
 connectDatabase().then(() => {
