@@ -45,9 +45,6 @@ npm run dev
 cd client
 npm run dev
 ```
-
-### 5. Open the app
-Visit http://localhost:3000
-
 ## Environment
-The server uses an in-memory MongoDB instance by default. If you want to use a real MongoDB database, set `MONGODB_URI` inside `server/.env`.
+PORT=5000
+MONGO_URI=mongodb+srv://rishikrishik077_db_user:Rishik%409891@cluster0.ieajgz4.mongodb.net/ems?retryWrites=true&w=majority&appName=Cluster0 
