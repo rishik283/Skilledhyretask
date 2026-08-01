@@ -20,6 +20,13 @@ app.get('/', (req, res) => {
   res.send('Employee Management API is running');
 });
 
+app.get('/api', (req, res) => {
+  res.json({
+    message: 'Employee Management API is running',
+    endpoints: ['/api/employees', '/api/employees/:id']
+  });
+});
+
 async function connectDatabase() {
   const mongoUri = process.env.MONGO_URI || process.env.MONGODB_URI;
 
